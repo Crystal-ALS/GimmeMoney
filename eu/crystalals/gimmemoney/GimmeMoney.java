@@ -9,12 +9,17 @@ public class GimmeMoney extends JavaPlugin
 {
 	
 	static Economy economy = null;
+	static public ConfigGestion config = null;
 	
     @Override
     public void onEnable()
     {
     	// register events
     	new EntityKillListener(this);
+    	
+    	// Load configs
+    	if (config == null)
+    		config = new ConfigGestion(this);
     }
     
 	private boolean setupEconomy()
@@ -30,9 +35,6 @@ public class GimmeMoney extends JavaPlugin
     @Override
     public void onDisable()
     {
-    	
-    	
-
     }
 
 }
