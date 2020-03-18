@@ -34,12 +34,11 @@ public class ConfigGestion
 		}
 		
 		customConfig = YamlConfiguration.loadConfiguration(file);
-		customConfig.addDefault("cow.MinMoney", 10.00);
-		customConfig.addDefault("cow.MaxMoney", 40.00);
+		setCustomDefault();
 		customConfig.options().copyDefaults(true);
 		save();
 	}
-	
+
 	public boolean isEntityGivingMoney(String name)
 	{
 		return customConfig.contains(name);
@@ -54,7 +53,14 @@ public class ConfigGestion
 		double min = customConfig.getDouble(name + ".MinMoney");
 		double max = customConfig.getDouble(name + ".MaxMoney");
 		double ret = min + (max - min) * random.nextDouble();
-		return round(ret, plugin.getConfig().getInt("AfterDotNumber"));
+		return round(ret, plugin.getConfig().getInt("AfterDotNumbers"));
+	}
+	
+	private void setCustomDefault()
+	{
+		// Cow configs
+		customConfig.addDefault("Cow.MinMoney", 10.00);
+		customConfig.addDefault("Cow.MaxMoney", 40.00);
 	}
 	
 	/*
@@ -62,7 +68,9 @@ public class ConfigGestion
 	 */
 	private double round(double to_round, int n)
 	{
-		double power_ten = Math.pow(to_round, n);
+		if (n == 0)
+			return Math.round(to_round);
+		double power_ten = Math.pow(10, n);
 		return ((double)Math.round(to_round * power_ten)) / power_ten;
 	}
 	

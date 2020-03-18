@@ -8,7 +8,7 @@ import net.milkbowl.vault.economy.Economy;
 public class GimmeMoney extends JavaPlugin
 {
 	
-	static Economy economy = null;
+	static public Economy economy = null;
 	static public ConfigGestion config = null;
 	
     @Override
@@ -20,16 +20,24 @@ public class GimmeMoney extends JavaPlugin
     	// Load configs
     	if (config == null)
     		config = new ConfigGestion(this);
+    	
+    	// set economy
+    	if (!setupEconomy())
+    		System.out.println("Unable to find an economy plugin (IE essentials)!");
     }
     
-	private boolean setupEconomy()
-    {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null)
+        {
+            return false;
         }
-
-        return (economy != null);
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null)
+        {
+            return false;
+        }
+        economy = rsp.getProvider();
+        return economy != null;
     }
 
     @Override
