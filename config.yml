@@ -1,10 +1,8 @@
 # Should player be notified when they get money from this plugin ?
 EnableChatMessage: true
-# Boosts work this way: gainedMoney * moneyboost
+AfterDotNumbers: 2
 MoneyBoost:
     Enabled: false
-    # Give gimmemoney.moneyboost.[boostname] permission in order to give this
-    # boosts to someone
     Boost:
         VIP: 1.5
         SUPERVIP: 2.0
