@@ -1,0 +1,6 @@
+name: GimmeMoney
+main: eu.crystalals.gimmemoney.GimmeMoney
+depend: [Vault]
+version: 1.0
+api-version: 1.12.2
+commands:
