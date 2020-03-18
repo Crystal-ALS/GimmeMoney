@@ -1,7 +1,9 @@
 package eu.crystalals.gimmemoney;
 
-import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,10 +14,19 @@ public class GimmeMoney extends JavaPlugin implements Listener {
 	static Economy economy = null;
 	
     @Override
-    public void onEnable() {
-    	
-    	Bukkit.getPluginManager().registerEvents(this, this);
-    	
+    public void onEnable()
+    {
+    	getServer().getPluginManager().registerEvents(this, this);
+    	//Bukkit.getPluginManager().registerEvents(this, this);
+    }
+    
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event)
+    {
+        LivingEntity entity = event.getEntity();
+        
+        if (entity.getKiller() != null)
+        	entity.getKiller().sendMessage("You killed an: " + entity.getName());
     }
     
 	private boolean setupEconomy()
@@ -29,7 +40,8 @@ public class GimmeMoney extends JavaPlugin implements Listener {
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable()
+    {
     	
     	
 
