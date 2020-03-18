@@ -4,3 +4,8 @@ depend: [Vault]
 version: 1.0
 api-version: 1.12.2
 commands:
+   setmoney:
+      description: Set the money for killing a mob
+      permission: gimmemoney.admin
+      permission-message: Vous ne pouvez pas faire ça!
+      usage: "/<command> <min_money> <max_money>"

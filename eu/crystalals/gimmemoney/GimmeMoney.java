@@ -16,6 +16,7 @@ public class GimmeMoney extends JavaPlugin
     {
     	// register events
     	new EntityKillListener(this);
+    	new RightClickListener(this);
     	
     	// Load configs
     	if (config == null)
@@ -24,6 +25,9 @@ public class GimmeMoney extends JavaPlugin
     	// set economy
     	if (!setupEconomy())
     		System.out.println("Unable to find an economy plugin (IE essentials)!");
+    	
+    	// register command
+    	getCommand("setmoney").setExecutor(new CommandSetMoney());
     }
     
     private boolean setupEconomy() {

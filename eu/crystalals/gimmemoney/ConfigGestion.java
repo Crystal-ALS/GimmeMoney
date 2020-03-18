@@ -56,6 +56,13 @@ public class ConfigGestion
 		return round(ret, plugin.getConfig().getInt("AfterDotNumbers"));
 	}
 	
+	public void SetMoney(String name, double min_value, double max_value)
+	{
+		customConfig.set(name + ".MinMoney" , min_value);
+		customConfig.set(name + ".MaxMoney", max_value);
+		save();
+	}
+	
 	private void setCustomDefault()
 	{
 		// Cow configs
