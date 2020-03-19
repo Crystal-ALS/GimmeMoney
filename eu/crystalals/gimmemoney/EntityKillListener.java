@@ -24,9 +24,13 @@ public class EntityKillListener implements Listener
         	String entity_name = entity.getName();
         	if (GimmeMoney.config.isEntityGivingMoney(entity_name))
         	{
-        		double money_got = GimmeMoney.config.getMoney(entity_name);
+        		double money_got = GimmeMoney.config.getMoney(p, entity_name);
         		GimmeMoney.economy.depositPlayer(p, money_got);
-        		p.sendMessage("§6Vous venez d'optenir §c" + money_got + " §6pour avoir tuer §c" + entity_name + "§6 !");
+        		if (GimmeMoney.config.SendMessagesToPlayers())
+        			p.sendMessage("§6Vous venez d'obtenir §c"
+        				+ String.format("%." + GimmeMoney.config.howMuchRound() + "f", money_got)
+        				+ GimmeMoney.config.Devise()
+        				+ " §6pour avoir tuer §c" + entity_name + "§6 !");
         	}
         }
     }

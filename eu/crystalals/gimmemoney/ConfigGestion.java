@@ -3,10 +3,12 @@ package eu.crystalals.gimmemoney;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 public class ConfigGestion
 {
@@ -48,12 +50,13 @@ public class ConfigGestion
 	 * This function get the money given by an entity,
 	 * it set the return value to random from MinMoney and MaxMoney.
 	 */
-	public double getMoney(String name)
+	public double getMoney(Player p, String name)
 	{
 		double min = customConfig.getDouble(name + ".MinMoney");
 		double max = customConfig.getDouble(name + ".MaxMoney");
 		double ret = min + (max - min) * random.nextDouble();
-		return round(ret, plugin.getConfig().getInt("AfterDotNumbers"));
+		double ret_rounded = round(ret, plugin.getConfig().getInt("AfterDotNumbers"));
+		return permissionMultiplier(p, ret_rounded);
 	}
 	
 	public void SetMoney(String name, double min_value, double max_value)
@@ -61,6 +64,42 @@ public class ConfigGestion
 		customConfig.set(name + ".MinMoney" , min_value);
 		customConfig.set(name + ".MaxMoney", max_value);
 		save();
+	}
+	
+	public boolean SendMessagesToPlayers()
+	{
+		return plugin.getConfig().getBoolean("EnableChatMessage");
+	}
+	
+	public String Devise()
+	{
+		return plugin.getConfig().getString("MoneyUsed");
+	}
+	
+	public int howMuchRound()
+	{
+		System.out.println(plugin.getConfig().getInt("AfterDotNumbers"));
+		return plugin.getConfig().getInt("AfterDotNumbers");
+	}
+	
+	private double permissionMultiplier(Player p, double ret)
+	{
+		if (plugin.getConfig().getBoolean("MoneyBoost.Enabled"))
+		{
+			Set<String> keys = plugin.getConfig().getConfigurationSection("MoneyBoost.Boost").getKeys(false);
+			for (String key : keys)
+			{
+				if (p.hasPermission("gimmemoney.boost." + key))
+				{
+					return plugin.getConfig().getDouble("MoneyBoost.Boost." + key) * ret;
+				}
+			}
+			return ret;
+		}
+		else
+		{
+			return ret;
+		}
 	}
 	
 	private void setCustomDefault()

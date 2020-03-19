@@ -1,8 +1,19 @@
-# Should player be notified when they get money from this plugin ?
+# This is the config file for plugin GimmeMoney
+# EnableChatMessage allow you to set if players should get notified when they
+# get money from this plugin.
+#
+# AfterDotNumbers allow you to set how many numbers after the dot you will give
+# money, for example if it is set to 2 you can give 3.43 but if it is set to 0
+# you can give only 3.
+#
+# Money boost, allow you to set boosts for graded members, just add the permission
+# gimmemoney.boost.[boost name]
+# for example: gimmemoney.boost.vip
 EnableChatMessage: true
 AfterDotNumbers: 2
+MoneyUsed: '$'
 MoneyBoost:
     Enabled: false
     Boost:
-        VIP: 1.5
-        SUPERVIP: 2.0
+        vip: 1.5
+        supervip: 2.0
